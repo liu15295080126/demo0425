@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+
+</head>
+<body>
+<div th:replace="dashboard::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{dashboard::sidebar(activeUrl='emps')}">
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            <h2 class="sub-header">
+                <span class="text-left">List All</span>
+                <span class="pull-right">
+                      <a class=" btn btn-sm btn-success" th:href="@{/emp}">添加员工</a>
+                </span>
+            </h2>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>地址</th>
+                        <th>密码</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="emp:${emps}">
+                        <td th:text="${emp.id}">1,001</td>
+                        <td th:text="${emp.name}">ipsum</td>
+                        <td th:text="${emp.address}">dolor</td>
+                        <td th:text="${emp.password}">sit</td>
+                        <td>
+                            <a class=" btn btn-sm btn-primary " th:href="@{/emp/}+${emp.id}">编辑</a>
+                            <button th:attr="del_uri=@{/emp/delete/}+${emp.id}" class="btn btn-sm btn-danger deleteBtn">
+                                删除
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <form id="deleteEmpForm" method="post">
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</div>
+<script th:src="@{/webjars/jquery/3.4.1/jquery.js}">
+</script>
+<script>
+    $(".deleteBtn").click(function () {
+        //删除指定员工
+        alert($(this).attr("del_uri"))
+        $("#deleteEmpForm").attr("action", $(this).attr("del_uri")).submit();
+        return false;
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/edit.css}">
+</head>
+<body>
+<div th:replace="dashboard::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{dashboard::sidebar(activeUrl='emps')}">
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h2 class="sub-header">
+                <span class="text-left" th:text="${emp==null?'添加':'修改'}"></span>
+            </h2>
+            <div>
+                <div align="center">
+                    <form th:action="@{/emp}" method="post">
+                        <div class="wrap">
+                            <div class="content">
+                                <div class="item">
+                                    <!--                    <div class="detail-item">-->
+                                    <label for="username" id="userNameLabel" class="pass-label">用户名</label>
+                                    <input type="text" id="username" name="username" class="pass-text-input " th:value="${emp!=null}?${emp.username}">
+                                    <!--                    </div>-->
+                                </div>
+                                <div class="item" th:if="${emp==null}">
+                                    <label for="password" class="pass-label">密码</label>
+                                    <input type="password" name="password" id="password" class="pass-text-input " >
+                                </div>
+                                <div class="item" th:if="${emp==null}">
+                                    <label for="pwd" class="pass-label">重复密码</label>
+                                    <input type="password" name="pwd" id="pwd" class="pass-text-input ">
+                                </div>
+                                <div class="item">
+                                    <label for="name" class="pass-label">真实姓名</label>
+                                    <input type="text" name="name" id="name" class="pass-text-input " th:value="${emp!=null}?${emp.name}">
+                                </div>
+                                <div class="item">
+                                    <label for="manLabel" class="pass-label" >性别</label>
+                                    <span>
+                                        <span class="sex-block">
+                                            <input type="radio" name="gender" value="1" id="man" class="pass-radio-input" th:checked="${emp!=null}?${emp.gender==1}">
+                                        </span>
+                                       <label for="man" id="manLabel" class="pass-radio-label">男</label>
+<!--                                        <input class="form-check-input" type="radio" name="gender" value="1" th:checked="${emp.gender==1}" >-->
+<!--                                        <label class="form-check-label">男</label>-->
+                                    </span>
+                                    <span>
+                                        <span class="sex-block">
+                                            <input type="radio" name="gender" value="0" id="woman" class="pass-radio-input" th:checked="${emp!=null}?${emp.gender==0}">
+                                        </span>
+                                        <label for="woman" id="womanLabel" class="pass-radio-label">女</label>
+<!--                                        <input class="form-check-input" type="radio" name="gender" value="0"   th:checked="${emp.gender==0}">-->
+<!--                                        <label class="form-check-label">女</label>-->
+                                    </span>
+                                </div>
+                                <div class="item">
+                                    <label for="address" class="pass-label">地址</label>
+                                    <input type="text" name="address" id="address" class="pass-text-input " th:value="${emp!=null}?${emp.address}">
+                                </div>
+                                <div class="item">
+                                    <button type="submit" class="btn btn-info" th:text="${emp==null?'添加':'修改'}"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
